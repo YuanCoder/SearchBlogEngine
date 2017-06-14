@@ -15,10 +15,10 @@ import java.util.List;
 public class GoogleCxServiceImpl implements GoogleCxService{
 
     @Autowired
-    private GoogleCxDao googleCxdao;
+    private GoogleCxDao googleCxDao;
 
     @Override
     public List<GoogleCx> queryAll() {
-        return googleCxdao.queryAll();
+        return googleCxDao.queryAll();
     }
 }

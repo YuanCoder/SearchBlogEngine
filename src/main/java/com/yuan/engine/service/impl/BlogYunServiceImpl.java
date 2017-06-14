@@ -36,7 +36,6 @@ public class BlogYunServiceImpl implements BlogYunService {
         int index=0;
         List<HitBlog> hitBlogList=new ArrayList<HitBlog>();
         index=index%urlList.size(); // 计算索引
-        JSONArray r=null;
         boolean flag=true;
         for(int i=1;i<=4;i++){
             try {
@@ -55,7 +54,7 @@ public class BlogYunServiceImpl implements BlogYunService {
         }
         if(!flag){ // 4次请求都失败
             return R.error("服务器忙，请过几秒再试！");
-        }else if(r.size()==0){ // 未查询到结果
+        }else if(hitBlogList.size()==0){ // 未查询到结果
             return R.error("未查询到结果，请换个关键字！");
         }else{ // 有结果
             return R.ok().put(hitBlogList);

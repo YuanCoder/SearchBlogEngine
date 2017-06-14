@@ -6,10 +6,10 @@
     <resultMap id="resultGoogelCx" type="com.yuan.engine.entity.GoogleCx">
         <id column="id" property="id"></id>
         <result column="key" property="key"/>
-    </resultMap>.
+    </resultMap>
 
     <!--通过所有GoogleCxDao对象-->
-    <select id="queryAll" resultType="user">
+    <select id="queryAll" resultMap="resultGoogelCx">
         SELECT * from googel_cx
     </select>
 

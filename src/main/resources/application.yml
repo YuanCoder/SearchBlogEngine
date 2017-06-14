@@ -16,14 +16,16 @@ spring:
     max-idle: 500
     min-idle: 0
     timeout: 0
-mybatis: #mybatsi 配置信息
-  type-aliases-package: com.yuan.engine.entity
-  #mapper加载路径
-  mapper-locations: classpath*:mapper/*.xml
-  #myatbis配置文件
-  config-location: classpath:mybatis-conf.xml
+
+
 #加载log4j2
 #logging:
  # config: classpath:log4j2.xml
  # level: debug
- # file:
+
+mybatis:
+  type-aliases-package: com.yuan.engine.entity
+  #mapper加载路径
+  mapper-locations: classpath:mapper/*.xml
+  #myatbis配置文件
+  config-location: classpath:mybatis-conf.xml
