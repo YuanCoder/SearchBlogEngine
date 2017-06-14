@@ -1,7 +1,7 @@
 package com.yuan.engine.entity;
 
 /**
- * Created by Administrator on 2017/6/13.
+ * Created by Yuanjp on 2017/6/13.
  */
 public class User {
     private String name;

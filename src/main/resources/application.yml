@@ -1,12 +1,12 @@
 spring:
   profiles:
     active: dev
-  datasource: # Êı¾İ¿âÁ¬½ÓĞÅÏ¢
+  datasource: # æ•°æ®åº“è¿æ¥ä¿¡æ¯
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/searchblogengine
     username: root
     password: yuan
-  redis:   #Redis ÅäÖÃĞÅÏ¢
+  redis:   #Redis é…ç½®ä¿¡æ¯
     host: localhost
     port: 6379
     password: yuan
@@ -16,6 +16,6 @@ spring:
     max-idle: 500
     min-idle: 0
     timeout: 0
-mybatis: #mybatsi ÅäÖÃĞÅÏ¢
+mybatis: #mybatsi é…ç½®ä¿¡æ¯
   mapper-locations: classpath*:mapper/*Mapper.xml
   type-aliases-package: com.yuan.engine.entity
