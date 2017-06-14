@@ -2,10 +2,16 @@ package com.yuan.engine.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.yuan.engine.service.BlogYun;
+import com.yuan.engine.entity.GoogleCx;
+import com.yuan.engine.entity.HitBlog;
+import com.yuan.engine.service.BlogYunService;
+import com.yuan.engine.service.GoogleCxService;
+import com.yuan.engine.utils.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,35 +22,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/6/14 0014.
+ * Created by Yuanjp on 2017/6/14 0014.
  */
-public class BlogYunImpl implements BlogYun {
-    protected Logger logger= LoggerFactory.getLogger(getClass());
-    public static List<String> urlList = new ArrayList<String>();
+@Service("blogYunService")
+public class BlogYunServiceImpl implements BlogYunService {
 
-    int index=0;
-    {
-        BufferedReader urlReader = new BufferedReader(new InputStreamReader(BlogYunImpl.class.getResourceAsStream("/url.txt")));
-        String url = "";
-        try {
-            while((url = urlReader.readLine()) != null) {
-                urlList.add(url);
-                logger.info(url);
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+
+
+    protected Logger logger= LoggerFactory.getLogger(getClass());
 
     @Override
-    public String search(String q, String start) {
+    public R search(String q, String start ,List<GoogleCx> urlList) {
+        int index=0;
+        List<HitBlog> hitBlogList=new ArrayList<HitBlog>();
         index=index%urlList.size(); // 计算索引
         JSONArray r=null;
         boolean flag=true;
         for(int i=1;i<=4;i++){
             try {
-                r=trySearch(urlList.get(index),q,start);
+                hitBlogList=trySearch(urlList.get(index).getKey(),q,start);
                 logger.info("index="+index+"执行成功！");
                 break;
             } catch (Exception e) {
@@ -57,18 +53,13 @@ public class BlogYunImpl implements BlogYun {
                 continue;
             }
         }
-        JSONObject result=new JSONObject();
         if(!flag){ // 4次请求都失败
-            result.put("success", false);
-            result.put("errorInfo", "服务器忙，请过几秒再试！");
+            return R.error("服务器忙，请过几秒再试！");
         }else if(r.size()==0){ // 未查询到结果
-            result.put("success", false);
-            result.put("errorInfo", "未查询到结果，请换个关键字！");
+            return R.error("未查询到结果，请换个关键字！");
         }else{ // 有结果
-            result.put("success", true);
-            result.put("rows", r);
+            return R.ok().put(hitBlogList);
         }
-        return result.toString();
     }
 
     /**
@@ -78,7 +69,7 @@ public class BlogYunImpl implements BlogYun {
      * @param start
      * @return
      */
-    private JSONArray trySearch(String cx, String query, String start)throws Exception{
+    private List<HitBlog>  trySearch(String cx, String query, String start)throws Exception{
         query= URLEncoder.encode(query, "utf-8");
         String urlStr="https://www.googleapis.com/customsearch/v1element?key=AIzaSyCVAXiUzRYsML1Pv6RwSG1gunmMikTzQqY&rsz=filtered_cse&num=10&hl=en&prettyPrint=false&source=gcsc&gss=.com&sig=584853a42cc2f90f5533642697d97114&start="+start+"&cx="+cx+"&q="+query+"&sort=&googlehost=www.google.com";
         URL url = new URL(urlStr);
@@ -90,16 +81,19 @@ public class BlogYunImpl implements BlogYun {
         }
         bufr.close();
         JSONArray r=new JSONArray();
-        JSONObject jsonObject=JSONObject.fromObject(sb.toString());
+        JSONObject jsonObject=JSONObject.parseObject(sb.toString());
         JSONArray results=jsonObject.getJSONArray("results");
+        List<HitBlog> hitBlogList=new ArrayList<HitBlog>();
         for(int i=0;i<results.size();i++){
+
             JSONObject j=(JSONObject) results.get(i);
             JSONObject o=new JSONObject();
-            o.put("title", j.get("title"));
-            o.put("content", j.get("content"));
-            o.put("unescapedUrl", j.get("unescapedUrl"));
-            r.add(o);
+            HitBlog hitBlog=new HitBlog();
+            hitBlog.setTitle(j.get("title").toString());
+            hitBlog.setContent(j.get("content").toString());
+            hitBlog.setUnescapedUrl(j.get("unescapedUrl").toString());
+            hitBlogList.add(hitBlog);
         }
-        return r;
+        return hitBlogList;
     }
 }
