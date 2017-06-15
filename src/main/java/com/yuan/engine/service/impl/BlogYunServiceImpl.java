@@ -6,6 +6,7 @@ import com.yuan.engine.entity.GoogleCx;
 import com.yuan.engine.entity.HitBlog;
 import com.yuan.engine.service.BlogYunService;
 import com.yuan.engine.service.GoogleCxService;
+import com.yuan.engine.utils.HttpClientUtil;
 import com.yuan.engine.utils.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,6 @@ public class BlogYunServiceImpl implements BlogYunService {
                 logger.info("index="+index+"执行成功！");
                 break;
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 logger.info("index="+index+"出现异常！" +e);
                 if(i==4){
                     flag=false;
@@ -72,14 +72,10 @@ public class BlogYunServiceImpl implements BlogYunService {
     private List<HitBlog>  trySearch(String cx, String query, String start)throws Exception{
         query= URLEncoder.encode(query, "utf-8");
         String urlStr="https://www.googleapis.com/customsearch/v1element?key=AIzaSyCVAXiUzRYsML1Pv6RwSG1gunmMikTzQqY&rsz=filtered_cse&num=10&hl=en&prettyPrint=false&source=gcsc&gss=.com&sig=584853a42cc2f90f5533642697d97114&start="+start+"&cx="+cx+"&q="+query+"&sort=&googlehost=www.google.com";
-        URL url = new URL(urlStr);
-        BufferedReader bufr = new BufferedReader(new InputStreamReader(new BufferedInputStream(url.openStream()),"utf-8"));
-        String line;
-        StringBuffer sb=new StringBuffer();
-        while((line = bufr.readLine())!=null){
-            sb.append(line);
-        }
-        bufr.close();
+        logger.info(urlStr);
+        HttpClientUtil httpClient=HttpClientUtil.getInstance();
+        StringBuffer sb=new StringBuffer(httpClient.sendHttpGet(urlStr));
+        logger.info(sb.toString());
         JSONArray r=new JSONArray();
         JSONObject jsonObject=JSONObject.parseObject(sb.toString());
         JSONArray results=jsonObject.getJSONArray("results");
