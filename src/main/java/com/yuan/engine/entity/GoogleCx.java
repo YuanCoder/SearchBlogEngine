@@ -24,4 +24,12 @@ public class GoogleCx {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "GoogleCx{" +
+                "id=" + id +
+                ", key='" + key + '\'' +
+                '}';
+    }
 }

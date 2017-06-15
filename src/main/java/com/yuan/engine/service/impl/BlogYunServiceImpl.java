@@ -36,6 +36,7 @@ public class BlogYunServiceImpl implements BlogYunService {
         int index=0;
         List<HitBlog> hitBlogList=new ArrayList<HitBlog>();
         index=index%urlList.size(); // 计算索引
+        logger.info("urlList="+urlList.toString());
         boolean flag=true;
         for(int i=1;i<=4;i++){
             try {
@@ -44,8 +45,8 @@ public class BlogYunServiceImpl implements BlogYunService {
                 break;
             } catch (Exception e) {
                 // TODO Auto-generated catch block
-                logger.info("index="+index+"出现异常！");
-                if(i==3){
+                logger.info("index="+index+"出现异常！" +e);
+                if(i==4){
                     flag=false;
                 }
                 index++;
