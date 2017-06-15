@@ -4,7 +4,7 @@ package com.yuan.engine.constant;
  * 系统重要字符封装管理类
  * Created by Yuanjp on 2017/6/15 0015.
  */
-public interface ConstantParam {
+public interface BaseParams {
     /**
      * 报文有用参数
      */

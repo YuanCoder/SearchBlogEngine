@@ -2,23 +2,17 @@ package com.yuan.engine.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.yuan.engine.constant.ConstantParam;
+import com.yuan.engine.constant.ConstantParams;
+import com.yuan.engine.constant.BaseParams;
 import com.yuan.engine.entity.GoogleCx;
 import com.yuan.engine.entity.HitBlog;
 import com.yuan.engine.service.BlogYunService;
-import com.yuan.engine.service.GoogleCxService;
 import com.yuan.engine.utils.HttpClientUtil;
 import com.yuan.engine.utils.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +22,6 @@ import java.util.List;
  */
 @Service("blogYunService")
 public class BlogYunServiceImpl implements BlogYunService {
-
-
 
     protected Logger logger= LoggerFactory.getLogger(getClass());
 
@@ -68,28 +60,28 @@ public class BlogYunServiceImpl implements BlogYunService {
     /**
      * 查询
      * @param googleCx
-     * @param query
+     * @param q
      * @param start
      * @return
      */
-    private List<HitBlog>  trySearch(GoogleCx googleCx, String query, String start)throws Exception{
-        query= URLEncoder.encode(query, "utf-8");
-        String urlStr= ConstantParam.GOOGLEAPI_URL_A+start+ConstantParam.GOOGLEAPI_URL_B+googleCx.getKey()+ConstantParam.GOOGLEAPI_URL_C+query+ConstantParam.GOOGLEAPI_URL_D;
+    private List<HitBlog>  trySearch(GoogleCx googleCx, String q, String start)throws Exception{
+        q= URLEncoder.encode(q, "utf-8");
+        String urlStr= ConstantParams.getGoogleApiUrl(start,googleCx.getKey(),q);
         logger.info(urlStr);
         HttpClientUtil httpClient=HttpClientUtil.getInstance();
         StringBuffer sb=new StringBuffer(httpClient.sendHttpGet(urlStr));
         logger.info(sb.toString());
         JSONArray r=new JSONArray();
         JSONObject jsonObject=JSONObject.parseObject(sb.toString());
-        JSONArray results=jsonObject.getJSONArray(ConstantParam.RESULTS);
+        JSONArray results=jsonObject.getJSONArray(BaseParams.RESULTS);
         List<HitBlog> hitBlogList=new ArrayList<HitBlog>();
         for(int i=0;i<results.size();i++){
 
             JSONObject j=(JSONObject) results.get(i);
             HitBlog hitBlog=new HitBlog();
-            hitBlog.setTitle(j.get(ConstantParam.TITLE).toString());
-            hitBlog.setContent(j.get(ConstantParam.CONTENT).toString());
-            hitBlog.setUnescapedUrl(j.get(ConstantParam.UNESCAPEDURL).toString());
+            hitBlog.setTitle(j.get(BaseParams.TITLE).toString());
+            hitBlog.setContent(j.get(BaseParams.CONTENT).toString());
+            hitBlog.setUnescapedUrl(j.get(BaseParams.UNESCAPEDURL).toString());
             hitBlogList.add(hitBlog);
         }
         return hitBlogList;
