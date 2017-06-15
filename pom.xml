@@ -97,6 +97,12 @@
 			<version>1.2.32</version>
 		</dependency>
 
+		<!-- thymeleaf模板支持 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
