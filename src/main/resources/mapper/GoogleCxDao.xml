@@ -6,6 +6,8 @@
     <resultMap id="resultGoogelCx" type="com.yuan.engine.entity.GoogleCx">
         <id column="id" property="id"></id>
         <result column="key" property="key"/>
+        <result column="engine_name" property="engineName"/>
+        <result column="description" property="description"/>
     </resultMap>
 
     <!--通过所有GoogleCxDao对象-->

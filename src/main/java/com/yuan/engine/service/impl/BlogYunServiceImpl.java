@@ -36,13 +36,15 @@ public class BlogYunServiceImpl implements BlogYunService {
     public R search(String q, String start ,List<GoogleCx> urlList) {
         int index=0;
         List<HitBlog> hitBlogList=new ArrayList<HitBlog>();
-        index=index%urlList.size(); // 计算索引
+
+        GoogleCx googleCx=urlList.get(index);
         logger.info("urlList="+urlList.toString());
         boolean flag=true;
         for(int i=1;i<=4;i++){
+            index=index%urlList.size(); // 计算索引
             try {
-                hitBlogList=trySearch(urlList.get(index).getKey(),q,start);
-                logger.info("index="+index+"执行成功！");
+                hitBlogList=trySearch(googleCx,q,start);
+                logger.info("index="+index+"  engineName="+googleCx.getEngineName()+"执行成功！");
                 break;
             } catch (Exception e) {
                 logger.info("index="+index+"出现异常！" +e);
@@ -69,9 +71,9 @@ public class BlogYunServiceImpl implements BlogYunService {
      * @param start
      * @return
      */
-    private List<HitBlog>  trySearch(String cx, String query, String start)throws Exception{
+    private List<HitBlog>  trySearch(GoogleCx googleCx, String query, String start)throws Exception{
         query= URLEncoder.encode(query, "utf-8");
-        String urlStr="https://www.googleapis.com/customsearch/v1element?key=AIzaSyCVAXiUzRYsML1Pv6RwSG1gunmMikTzQqY&rsz=filtered_cse&num=10&hl=en&prettyPrint=false&source=gcsc&gss=.com&sig=584853a42cc2f90f5533642697d97114&start="+start+"&cx="+cx+"&q="+query+"&sort=&googlehost=www.google.com";
+        String urlStr="https://www.googleapis.com/customsearch/v1element?key=AIzaSyCVAXiUzRYsML1Pv6RwSG1gunmMikTzQqY&rsz=filtered_cse&num=10&hl=en&prettyPrint=false&source=gcsc&gss=.com&sig=584853a42cc2f90f5533642697d97114&start="+start+"&cx="+googleCx.getKey()+"&q="+query+"&sort=&googlehost=www.google.com";
         logger.info(urlStr);
         HttpClientUtil httpClient=HttpClientUtil.getInstance();
         StringBuffer sb=new StringBuffer(httpClient.sendHttpGet(urlStr));

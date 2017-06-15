@@ -29,9 +29,9 @@ import org.apache.http.util.EntityUtils;
   
 public class HttpClientUtil {  
     private RequestConfig requestConfig = RequestConfig.custom()
-        .setSocketTimeout(5*60000)  //单位：毫秒
-        .setConnectTimeout(5*60000)
-        .setConnectionRequestTimeout(5*60000)
+        .setSocketTimeout(30000)  //单位：毫秒
+        .setConnectTimeout(30000)
+        .setConnectionRequestTimeout(30000)
         .build();  
       
     private static HttpClientUtil instance = null;    
