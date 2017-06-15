@@ -2,6 +2,7 @@ package com.yuan.engine.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.yuan.engine.constant.ConstantParam;
 import com.yuan.engine.entity.GoogleCx;
 import com.yuan.engine.entity.HitBlog;
 import com.yuan.engine.service.BlogYunService;
@@ -66,30 +67,29 @@ public class BlogYunServiceImpl implements BlogYunService {
 
     /**
      * 查询
-     * @param cx
+     * @param googleCx
      * @param query
      * @param start
      * @return
      */
     private List<HitBlog>  trySearch(GoogleCx googleCx, String query, String start)throws Exception{
         query= URLEncoder.encode(query, "utf-8");
-        String urlStr="https://www.googleapis.com/customsearch/v1element?key=AIzaSyCVAXiUzRYsML1Pv6RwSG1gunmMikTzQqY&rsz=filtered_cse&num=10&hl=en&prettyPrint=false&source=gcsc&gss=.com&sig=584853a42cc2f90f5533642697d97114&start="+start+"&cx="+googleCx.getKey()+"&q="+query+"&sort=&googlehost=www.google.com";
+        String urlStr= ConstantParam.GOOGLEAPI_URL_A+start+ConstantParam.GOOGLEAPI_URL_B+googleCx.getKey()+ConstantParam.GOOGLEAPI_URL_C+query+ConstantParam.GOOGLEAPI_URL_D;
         logger.info(urlStr);
         HttpClientUtil httpClient=HttpClientUtil.getInstance();
         StringBuffer sb=new StringBuffer(httpClient.sendHttpGet(urlStr));
         logger.info(sb.toString());
         JSONArray r=new JSONArray();
         JSONObject jsonObject=JSONObject.parseObject(sb.toString());
-        JSONArray results=jsonObject.getJSONArray("results");
+        JSONArray results=jsonObject.getJSONArray(ConstantParam.RESULTS);
         List<HitBlog> hitBlogList=new ArrayList<HitBlog>();
         for(int i=0;i<results.size();i++){
 
             JSONObject j=(JSONObject) results.get(i);
-            JSONObject o=new JSONObject();
             HitBlog hitBlog=new HitBlog();
-            hitBlog.setTitle(j.get("title").toString());
-            hitBlog.setContent(j.get("content").toString());
-            hitBlog.setUnescapedUrl(j.get("unescapedUrl").toString());
+            hitBlog.setTitle(j.get(ConstantParam.TITLE).toString());
+            hitBlog.setContent(j.get(ConstantParam.CONTENT).toString());
+            hitBlog.setUnescapedUrl(j.get(ConstantParam.UNESCAPEDURL).toString());
             hitBlogList.add(hitBlog);
         }
         return hitBlogList;

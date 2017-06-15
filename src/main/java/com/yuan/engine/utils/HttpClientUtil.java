@@ -204,7 +204,7 @@ public class HttpClientUtil {
         
     /**  
      * 发送Get请求Https  
-     * @param httpsGet
+     * @param httpGet
      * @return  
      */    
     private String sendHttpsGet(HttpGet httpGet) {    
