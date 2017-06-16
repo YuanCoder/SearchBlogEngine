@@ -28,9 +28,7 @@ public class IndexController extends BaseController{
     private GoogleCxService googleCxService;
 
     public static List<GoogleCx> urlList = new ArrayList<GoogleCx>();
-    {
 
-    }
     @PostMapping("/search/{p}")
     public R searchByKeyWord(@PathVariable("p") String keyWord, String start){
         urlList=googleCxService.queryAll();
