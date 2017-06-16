@@ -19,8 +19,7 @@ import java.util.List;
  * Created by Yuanjp on 2017/6/14 0014.
  */
 @RestController
-@RequestMapping("/blogyun")
-public class IndexCtroller {
+public class IndexController extends BaseController{
 
     @Resource
     private BlogYunService blogYunService;

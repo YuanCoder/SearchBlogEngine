@@ -69,9 +69,8 @@ public class BlogYunServiceImpl implements BlogYunService {
         String urlStr= ConstantParams.getGoogleApiUrl(start,googleCx.getKey(),q);
         logger.info(urlStr);
         HttpClientUtil httpClient=HttpClientUtil.getInstance();
-        StringBuffer sb=new StringBuffer(httpClient.sendHttpGet(urlStr));
+        StringBuffer sb=new StringBuffer(httpClient.sendHttpsGet(urlStr));
         logger.info(sb.toString());
-        JSONArray r=new JSONArray();
         JSONObject jsonObject=JSONObject.parseObject(sb.toString());
         JSONArray results=jsonObject.getJSONArray(BaseParams.RESULTS);
         List<HitBlog> hitBlogList=new ArrayList<HitBlog>();
@@ -79,9 +78,9 @@ public class BlogYunServiceImpl implements BlogYunService {
 
             JSONObject j=(JSONObject) results.get(i);
             HitBlog hitBlog=new HitBlog();
-            hitBlog.setTitle(j.get(BaseParams.TITLE).toString());
-            hitBlog.setContent(j.get(BaseParams.CONTENT).toString());
-            hitBlog.setUnescapedUrl(j.get(BaseParams.UNESCAPEDURL).toString());
+            hitBlog.setTitle(j.getString(BaseParams.TITLE));
+            hitBlog.setContent(j.getString(BaseParams.CONTENT));
+            hitBlog.setUnescapedUrl(j.getString(BaseParams.UNESCAPEDURL));
             hitBlogList.add(hitBlog);
         }
         return hitBlogList;
