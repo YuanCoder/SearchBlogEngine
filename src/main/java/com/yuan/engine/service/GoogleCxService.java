@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface GoogleCxService {
 
-    public List<GoogleCx> queryAll();
+    List<GoogleCx> queryAll();
 }

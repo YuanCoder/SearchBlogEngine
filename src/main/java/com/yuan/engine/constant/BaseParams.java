@@ -20,4 +20,12 @@ public interface BaseParams {
     public static final String  GOOGLEAPI_URL_B="&cx=";
     public static final String  GOOGLEAPI_URL_C="&q=";
     public static final String  GOOGLEAPI_URL_D="&sort=&googlehost=www.google.com";
+
+    /**
+     * 系统返回 参数
+     */
+    public static final String  CODE="code";
+    public static final String  MSG_KEY="msg";
+    public static final String  DATA="data";
+    public static final String  MSG_VALUE_A="未知异常!";
 }
