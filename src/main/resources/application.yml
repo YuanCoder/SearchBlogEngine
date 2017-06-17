@@ -16,7 +16,11 @@ spring:
     max-idle: 500
     min-idle: 0
     timeout: 0
-
+  thymeleaf:  #thymeleaf 配置
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
 
 #加载log4j2
 #logging:

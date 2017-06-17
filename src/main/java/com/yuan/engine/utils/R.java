@@ -1,6 +1,6 @@
 package com.yuan.engine.utils;
 
-import com.yuan.engine.constant.BaseParams;
+import com.yuan.engine.constant.BaseConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,11 +13,11 @@ public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
 	
 	public R() {
-		put(BaseParams.CODE, 0);
+		put(BaseConstants.CODE, 0);
 	}
 	
 	public static R error() {
-		return error(-1, BaseParams.MSG_VALUE_A);
+		return error(-1, BaseConstants.MSG_VALUE_A);
 	}
 	
 	public static R error(String msg) {
@@ -26,14 +26,14 @@ public class R extends HashMap<String, Object> {
 	
 	public static R error(int code, String msg) {
 		R r = new R();
-		r.put(BaseParams.CODE, code);
-		r.put(BaseParams.MSG_KEY, msg);
+		r.put(BaseConstants.CODE, code);
+		r.put(BaseConstants.MSG_KEY, msg);
 		return r;
 	}
 
 	public static R ok(String msg) {
 		R r = new R();
-		r.put(BaseParams.MSG_KEY, msg);
+		r.put(BaseConstants.MSG_KEY, msg);
 		return r;
 	}
 	
@@ -53,7 +53,7 @@ public class R extends HashMap<String, Object> {
 	}
 
 	public R put( Object value) {
-		super.put(BaseParams.DATA, value);
+		super.put(BaseConstants.DATA, value);
 		return this;
 	}
 }

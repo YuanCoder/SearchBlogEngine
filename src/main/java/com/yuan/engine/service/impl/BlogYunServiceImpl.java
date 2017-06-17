@@ -2,8 +2,8 @@ package com.yuan.engine.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.yuan.engine.constant.ConstantParams;
-import com.yuan.engine.constant.BaseParams;
+import com.yuan.engine.constant.ConstantConstants;
+import com.yuan.engine.constant.BaseConstants;
 import com.yuan.engine.entity.GoogleCx;
 import com.yuan.engine.entity.HitBlog;
 import com.yuan.engine.service.BlogYunService;
@@ -66,21 +66,21 @@ public class BlogYunServiceImpl implements BlogYunService {
      */
     private List<HitBlog>  trySearch(GoogleCx googleCx, String q, String start)throws Exception{
         q= URLEncoder.encode(q, "utf-8");
-        String urlStr= ConstantParams.getGoogleApiUrl(start,googleCx.getKey(),q);
+        String urlStr= ConstantConstants.getGoogleApiUrl(start,googleCx.getKey(),q);
         logger.info(urlStr);
         HttpClientUtil httpClient=HttpClientUtil.getInstance();
         StringBuffer sb=new StringBuffer(httpClient.sendHttpsGet(urlStr));
         logger.info(sb.toString());
         JSONObject jsonObject=JSONObject.parseObject(sb.toString());
-        JSONArray results=jsonObject.getJSONArray(BaseParams.RESULTS);
+        JSONArray results=jsonObject.getJSONArray(BaseConstants.RESULTS);
         List<HitBlog> hitBlogList=new ArrayList<HitBlog>();
         for(int i=0;i<results.size();i++){
 
             JSONObject j=(JSONObject) results.get(i);
             HitBlog hitBlog=new HitBlog();
-            hitBlog.setTitle(j.getString(BaseParams.TITLE));
-            hitBlog.setContent(j.getString(BaseParams.CONTENT));
-            hitBlog.setUnescapedUrl(j.getString(BaseParams.UNESCAPEDURL));
+            hitBlog.setTitle(j.getString(BaseConstants.TITLE));
+            hitBlog.setContent(j.getString(BaseConstants.CONTENT));
+            hitBlog.setUnescapedUrl(j.getString(BaseConstants.UNESCAPEDURL));
             hitBlogList.add(hitBlog);
         }
         return hitBlogList;

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html   xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="common/head :: head"></head>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css">
 </head>
 <body>
 <div class="container-fluid">
+    <header id="header" th:replace="common/header :: header"></header>
 
 helloworld
+    <footer id="footer" th:replace="common/footer :: footer"></footer>
 </div>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/index.js"></script>

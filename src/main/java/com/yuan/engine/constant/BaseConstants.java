@@ -1,10 +1,10 @@
 package com.yuan.engine.constant;
 
 /**
- * 系统重要字符封装管理类
+ * 封装系统常用常量 管理类
  * Created by Yuanjp on 2017/6/15 0015.
  */
-public interface BaseParams {
+public interface BaseConstants {
     /**
      * 报文有用参数
      */
