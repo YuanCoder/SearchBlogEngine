@@ -3,11 +3,26 @@
 
 <body>
 <header id="header" th:fragment="heaher">
+    <nav class="navbar navbar-inverse content_header" role="navigation">
+        <div class="container ">
+            <!-- 导航头部 -->
+            <div class="navbar-header center_postion" >
+                <ul class="nav navbar-nav">
+                    <li class="font_nav"><a href="#" >Echo下载</a></li>
+                    <li class="font_nav"><a href="#">博文检索</a></li>
+                </ul>
+            </div>
+            <!-- 导航项目 -->
+            <div class="collapse navbar-collapse navbar-collapse-example center_postion">
 
-<div class="row">
-    <div class="col-xs-12 col-md-8">.col-xs-12 .col-md-8</div>
-    <div class="col-xs-6 col-md-4">搜索框</div>
-</div>
+                <!-- 右侧的导航项目 -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="font_nav"><a href="#">帮助</a></li>
+                    <li class="font_nav"><a href="#">搜索</a></li>
+                </ul>
+            </div><!-- END .navbar-collapse -->
+        </div>
+    </nav>
 </header>
 </body>
 </html>

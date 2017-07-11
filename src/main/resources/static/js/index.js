@@ -1,7 +1,7 @@
 /**
  * Created by Yuanjp on 2017/6/16 0016.
  */
-var url="localhost:8083/localhost:8083/blogyun/search";
+var url="localhost:8083/blogyun/search";
 function  search () {
     $.ajax({
         type: "GET",

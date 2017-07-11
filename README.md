@@ -5,7 +5,7 @@
 
 - Spring && Spring boot
 - Mybatis
-- bootstrap
+- ZUI
 - flavr
 - thymeleaf
 
